@@ -5,6 +5,7 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
+labels = ['grontol', 'lanting', 'lumpia', 'putu ayu', 'serabi solo', 'wajik']
 img = cv2.imread("test.jpg")
 img = cv2.resize(img, (150, 150))
 img = img / 255.0
@@ -18,5 +19,5 @@ endpoint = "http://localhost:8080/v1/models/snackscan:predict"
 
 response = requests.post(endpoint, data=json_data)
 print(response)
-prediction = tf.argmax(response.json()["predictions"]).numpy()
-print(prediction)
+prediction = tf.argmax(response.json()["predictions"], 1).numpy()
+print(labels[prediction[0]])
